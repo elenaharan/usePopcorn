@@ -134,6 +134,7 @@ export default function App() {
               onAddWatched={handleAddWatched}
               rating={rating}
               setRating={setRating}
+              watched={watched}
             />
           ) : (
             <>
@@ -240,9 +241,18 @@ function MovieDetails({
   onAddWatched,
   rating,
   setRating,
+  watched,
 }) {
   const [movie, setMovie] = useState({});
   const [isLoading, setIsLoading] = useState(false);
+  const isWatched =
+    watched.length > 0
+      ? watched.map((movie) => movie.imdbID).includes(selectedId)
+      : false;
+
+  const watchedMovieUserRating = watched.find(
+    (movie) => movie.imdbID === selectedId
+  )?.userRating;
 
   const {
     Title: title,
@@ -313,13 +323,26 @@ function MovieDetails({
           </header>
           <section>
             <div className="rating">
-              <StarRating maxRating={10} size={24} onSetRating={setRating} />
-              {rating && (
-                <button className="btn-add" onClick={handleAdd}>
-                  + Add to list
-                </button>
+              {!isWatched ? (
+                <>
+                  <StarRating
+                    maxRating={10}
+                    size={24}
+                    onSetRating={setRating}
+                  />
+                  {rating && (
+                    <button className="btn-add" onClick={handleAdd}>
+                      + Add to list
+                    </button>
+                  )}
+                </>
+              ) : (
+                <p>
+                  You rated this movie {watchedMovieUserRating} <span>⭐️</span>
+                </p>
               )}
             </div>
+
             <p>
               <em>{plot}</em>
             </p>
@@ -334,7 +357,9 @@ function MovieDetails({
 
 function WatchedSummary({ watched }) {
   const avgImdbRating = average(watched.map((movie) => movie.imdbRating));
-  const avgUserRating = average(watched.map((movie) => movie.userRating));
+  const avgUserRating = average(
+    watched.map((movie) => movie.userRating)
+  ).toFixed(1);
   const avgRuntime = average(watched.map((movie) => movie.runtime));
 
   return (
