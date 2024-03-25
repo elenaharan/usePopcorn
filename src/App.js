@@ -447,7 +447,7 @@ function WatchedMovieList({ watched, onDeleteMovie }) {
         <WatchedMovie
           key={movie.imdbID}
           movie={movie}
-          deleteMovie={onDeleteMovie}
+          onDeleteMovie={onDeleteMovie}
         />
       ))}
     </ul>
