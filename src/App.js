@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import StarRating from "./StarRating";
+// import ExchangeConverter from "./ExhcangeConverter";
 
 const tempMovieData = [
   {
@@ -118,6 +119,7 @@ export default function App() {
         return;
       }
 
+      handleCloseMovie();
       fetchMovies();
 
       return function () {
@@ -135,6 +137,7 @@ export default function App() {
         <NumResults movies={movies} />
       </Navbar>
       <Main>
+        {/* <ExchangeConverter /> */}
         <Box>
           {/* {isLoading ? <Loader /> : <MovieList movies={movies} />} */}
           {!isLoading && !error && (
@@ -330,6 +333,7 @@ function MovieDetails({
         setMovie(data);
         setIsLoading(false);
       }
+
       fetchMovie();
     },
     [selectedId]
