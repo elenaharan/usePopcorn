@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import StarRating from "./StarRating";
 // import ExchangeConverter from "./ExhcangeConverter";
 
@@ -178,6 +178,12 @@ function Navbar({ children }) {
 }
 
 function Search({ query, setQuery }) {
+  const inputEl = useRef();
+
+  useEffect(function () {
+    inputEl.current.focus();
+  }, []);
+
   return (
     <input
       className="search"
@@ -185,6 +191,7 @@ function Search({ query, setQuery }) {
       placeholder="Search movies..."
       value={query}
       onChange={(e) => setQuery(e.target.value)}
+      ref={inputEl}
     />
   );
 }
