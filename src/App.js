@@ -37,7 +37,6 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [selectedId, setSelectedId] = useState(null);
-  const [rating, setRating] = useState("");
 
   // const [watched, setWatched] = useState([]);
   const [watched, setWatched] = useState(function () {
@@ -142,8 +141,6 @@ export default function App() {
               selectedId={selectedId}
               onCloseMovie={handleCloseMovie}
               onAddWatched={handleAddWatched}
-              rating={rating}
-              setRating={setRating}
               watched={watched}
             />
           ) : (
@@ -268,16 +265,18 @@ function Movie({ movie, onSelectMovie }) {
   );
 }
 
-function MovieDetails({
-  selectedId,
-  onCloseMovie,
-  onAddWatched,
-  rating,
-  setRating,
-  watched,
-}) {
+function MovieDetails({ selectedId, onCloseMovie, onAddWatched, watched }) {
   const [movie, setMovie] = useState({});
   const [isLoading, setIsLoading] = useState(false);
+  const [rating, setRating] = useState("");
+  const countRef = useRef(0);
+
+  useEffect(
+    function () {
+      if (rating) countRef.current++;
+    },
+    [rating]
+  );
 
   const isWatched =
     watched.length > 0
@@ -310,6 +309,7 @@ function MovieDetails({
       imdbRating: Number(imdbRating),
       runtime: Number(runtime.split(" ").at(0)),
       userRating: rating,
+      countRatingDecisions: countRef.current,
     };
     onAddWatched(newWatchedMovie);
     onCloseMovie();
