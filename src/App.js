@@ -278,6 +278,7 @@ function MovieDetails({
 }) {
   const [movie, setMovie] = useState({});
   const [isLoading, setIsLoading] = useState(false);
+
   const isWatched =
     watched.length > 0
       ? watched.map((movie) => movie.imdbID).includes(selectedId)
@@ -420,9 +421,7 @@ function MovieDetails({
 
 function WatchedSummary({ watched }) {
   const avgImdbRating = average(watched.map((movie) => movie.imdbRating));
-  const avgUserRating = average(
-    watched.map((movie) => movie.userRating)
-  ).toFixed(1);
+  const avgUserRating = average(watched.map((movie) => movie.userRating));
   const avgRuntime = average(watched.map((movie) => movie.runtime));
 
   return (
@@ -435,15 +434,15 @@ function WatchedSummary({ watched }) {
         </p>
         <p>
           <span>⭐️</span>
-          <span>{avgImdbRating}</span>
+          <span>{Math.round(avgImdbRating)}</span>
         </p>
         <p>
           <span>🌟</span>
-          <span>{avgUserRating}</span>
+          <span>{Math.round(avgUserRating)}</span>
         </p>
         <p>
           <span>⏳</span>
-          <span>{avgRuntime} min</span>
+          <span>{Math.round(avgRuntime)} min</span>
         </p>
       </div>
     </div>
