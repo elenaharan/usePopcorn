@@ -13,6 +13,7 @@ import { NumResults } from "./NumResults";
 import { Box } from "./Box";
 import { MovieList } from "./MovieList";
 import { WatchedMovieList } from "./WatchedMovieList";
+// import { Geolocation } from "./Geolocation";
 // import ExchangeConverter from "./ExhcangeConverter";
 
 export const average = (arr) =>
@@ -78,6 +79,7 @@ export default function App() {
             </>
           )}
         </Box>
+        {/* <Geolocation /> */}
       </Main>
     </>
   );
